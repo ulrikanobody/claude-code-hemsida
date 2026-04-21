@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hur Claude Code fungerar</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #0d1117;
+      color: #e6edf3;
+      line-height: 1.7;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 80px 24px;
+      text-align: center;
+      border-bottom: 1px solid #30363d;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #58a6ff, #bc8cff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 16px;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      color: #8b949e;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 60px auto;
+      padding: 0 24px;
+    }
+
+    .intro {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 48px;
+      font-size: 1.05rem;
+      color: #c9d1d9;
+    }
+
+    .intro strong {
+      color: #58a6ff;
+    }
+
+    h2 {
+      font-size: 1.6rem;
+      color: #f0f6fc;
+      margin-bottom: 24px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-bottom: 60px;
+    }
+
+    .card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      padding: 28px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .card:hover {
+      border-color: #58a6ff;
+      transform: translateY(-3px);
+    }
+
+    .card .icon {
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+
+    .card h3 {
+      font-size: 1.1rem;
+      color: #f0f6fc;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: #8b949e;
+      font-size: 0.95rem;
+    }
+
+    .workflow {
+      margin-bottom: 60px;
+    }
+
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .step-number {
+      background: linear-gradient(135deg, #58a6ff, #bc8cff);
+      color: #0d1117;
+      font-weight: 700;
+      font-size: 1rem;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-content h3 {
+      color: #f0f6fc;
+      margin-bottom: 6px;
+    }
+
+    .step-content p {
+      color: #8b949e;
+      font-size: 0.95rem;
+    }
+
+    .code-block {
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 16px 20px;
+      font-family: "SF Mono", "Fira Code", monospace;
+      font-size: 0.9rem;
+      color: #7ee787;
+      margin: 12px 0;
+      overflow-x: auto;
+    }
+
+    .code-section {
+      margin-bottom: 60px;
+    }
+
+    .code-section p {
+      color: #8b949e;
+      margin-bottom: 12px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 24px;
+      border-top: 1px solid #30363d;
+      color: #484f58;
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: #58a6ff;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Claude Code</h1>
+    <p>Anthropics AI-verktyg som hjälper dig skriva, förstå och förbättra kod direkt i terminalen.</p>
+  </header>
+
+  <main>
+
+    <div class="intro">
+      <strong>Claude Code</strong> är ett kommandoradsverktyg (CLI) från Anthropic som låter dig ha en direkt dialog med Claude — en av världens mest kapabla AI-modeller — inifrån din terminal eller editor. Du kan ställa frågor om kod, be Claude fixa buggar, skriva tester, refaktorera funktioner, eller till och med bygga hela funktioner från grunden.
+    </div>
+
+    <section>
+      <h2>Vad kan Claude Code göra?</h2>
+      <div class="cards">
+        <div class="card">
+          <div class="icon">🔍</div>
+          <h3>Utforska kodbaser</h3>
+          <p>Förstår hela projektet — filer, beroenden och arkitektur — och svarar på frågor om hur koden fungerar.</p>
+        </div>
+        <div class="card">
+          <div class="icon">🐛</div>
+          <h3>Fixa buggar</h3>
+          <p>Identifierar felmeddelanden, spårar ursprunget och föreslår eller implementerar en fix direkt.</p>
+        </div>
+        <div class="card">
+          <div class="icon">✍️</div>
+          <h3>Skriva ny kod</h3>
+          <p>Genererar funktioner, komponenter, API-endpoints och mycket mer baserat på din beskrivning.</p>
+        </div>
+        <div class="card">
+          <div class="icon">🧪</div>
+          <h3>Skriva tester</h3>
+          <p>Skapar enhetstester och integrationstester som faktiskt täcker din kod på ett meningsfullt sätt.</p>
+        </div>
+        <div class="card">
+          <div class="icon">♻️</div>
+          <h3>Refaktorera</h3>
+          <p>Förbättrar kodkvalitet, byter namn på variabler och moderniserar gammal kod utan att ändra beteendet.</p>
+        </div>
+        <div class="card">
+          <div class="icon">📖</div>
+          <h3>Förklara kod</h3>
+          <p>Ger tydliga förklaringar på vilken komplexitetsnivå du vill — från nybörjare till expert.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="workflow">
+      <h2>Hur det fungerar — steg för steg</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3>Installera Claude Code</h3>
+            <p>Claude Code installeras som ett npm-paket och kör direkt i din terminal.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3>Öppna ditt projekt</h3>
+            <p>Navigera till din projektmapp i terminalen. Claude Code läser in din kodbas automatiskt.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3>Starta en konversation</h3>
+            <p>Skriv vad du behöver hjälp med på naturligt språk — svenska eller engelska fungerar lika bra.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <h3>Godkänn ändringar</h3>
+            <p>Claude visar föreslagna ändringar och ber om din bekräftelse innan något skrivs till disk.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="code-section">
+      <h2>Snabbstart</h2>
+      <p>Installera och kör Claude Code med dessa kommandon:</p>
+      <div class="code-block">npm install -g @anthropic-ai/claude-code</div>
+      <p>Starta sedan i din projektmapp:</p>
+      <div class="code-block">cd mitt-projekt<br>claude</div>
+      <p>Exempel på vad du kan skriva till Claude:</p>
+      <div class="code-block">
+        "Förklara hur auth-flödet fungerar i det här projektet"<br>
+        "Fixa bugg på rad 42 i server.js"<br>
+        "Skriv ett test för funktionen calculateTotal"
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Byggd med Claude Code &mdash; <a href="https://claude.ai/code" target="_blank">claude.ai/code</a></p>
+  </footer>
+
+</body>
+</html>
