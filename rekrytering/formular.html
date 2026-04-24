@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ansökan – Personlig assistent</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f4f6f9;
+      color: #1a1a2e;
+      line-height: 1.6;
+      padding: 40px 16px;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1a1a2e, #0f3460);
+      color: white;
+      border-radius: 12px 12px 0 0;
+      padding: 40px 40px 32px;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+
+    header p {
+      opacity: 0.8;
+      font-size: 0.95rem;
+    }
+
+    form {
+      background: white;
+      border-radius: 0 0 12px 12px;
+      padding: 40px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
+    .section-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #0f3460;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin: 32px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e8ecf0;
+    }
+
+    .section-title:first-of-type {
+      margin-top: 0;
+    }
+
+    .field {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 6px;
+      color: #2c3e50;
+    }
+
+    label .required {
+      color: #e74c3c;
+      margin-left: 3px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="date"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid #dde2e8;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      color: #1a1a2e;
+      background: #fafbfc;
+      transition: border-color 0.2s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #0f3460;
+      background: white;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .radio-group, .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .radio-group label, .checkbox-group label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 400;
+      cursor: pointer;
+    }
+
+    input[type="radio"], input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #0f3460;
+      cursor: pointer;
+    }
+
+    .hint {
+      font-size: 0.82rem;
+      color: #7f8c9a;
+      margin-top: 4px;
+    }
+
+    .submit-area {
+      margin-top: 36px;
+      text-align: center;
+    }
+
+    button[type="submit"] {
+      background: linear-gradient(135deg, #1a1a2e, #0f3460);
+      color: white;
+      border: none;
+      padding: 14px 48px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+    }
+
+    button[type="submit"]:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    .privacy {
+      font-size: 0.8rem;
+      color: #7f8c9a;
+      margin-top: 12px;
+    }
+
+    /* Bekräftelsemeddelande */
+    #confirmation {
+      display: none;
+      background: #eafaf1;
+      border: 1.5px solid #2ecc71;
+      border-radius: 12px;
+      padding: 40px;
+      text-align: center;
+      margin-top: 24px;
+    }
+
+    #confirmation h2 {
+      color: #27ae60;
+      margin-bottom: 12px;
+    }
+
+    #confirmation p {
+      color: #2c3e50;
+    }
+
+    @media (max-width: 600px) {
+      header, form { padding: 24px; }
+      .row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>Ansökan – Personlig assistent</h1>
+    <p>Fyll i formuläret nedan. Alla fält markerade med * är obligatoriska.</p>
+  </header>
+
+  <form id="ansokningsformular" novalidate>
+
+    <!-- Personuppgifter -->
+    <div class="section-title">Personuppgifter</div>
+
+    <div class="row">
+      <div class="field">
+        <label>Förnamn <span class="required">*</span></label>
+        <input type="text" name="fornamn" required placeholder="Anna" />
+      </div>
+      <div class="field">
+        <label>Efternamn <span class="required">*</span></label>
+        <input type="text" name="efternamn" required placeholder="Svensson" />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label>E-postadress <span class="required">*</span></label>
+        <input type="email" name="epost" required placeholder="anna@example.com" />
+      </div>
+      <div class="field">
+        <label>Telefonnummer <span class="required">*</span></label>
+        <input type="tel" name="telefon" required placeholder="070-000 00 00" />
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Ort <span class="required">*</span></label>
+      <input type="text" name="ort" required placeholder="Stockholm" />
+    </div>
+
+    <!-- Erfarenhet -->
+    <div class="section-title">Erfarenhet &amp; utbildning</div>
+
+    <div class="field">
+      <label>Har du tidigare erfarenhet av arbete som personlig assistent? <span class="required">*</span></label>
+      <div class="radio-group">
+        <label><input type="radio" name="erfarenhet_pa" value="ja" required /> Ja</label>
+        <label><input type="radio" name="erfarenhet_pa" value="nej" /> Nej</label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Beskriv din tidigare erfarenhet inom vård, omsorg eller assistans</label>
+      <textarea name="erfarenhet_beskrivning" placeholder="Berätta kort om dina tidigare arbeten eller erfarenheter inom området..."></textarea>
+    </div>
+
+    <div class="field">
+      <label>Högsta avslutade utbildning <span class="required">*</span></label>
+      <select name="utbildning" required>
+        <option value="">Välj...</option>
+        <option>Grundskola</option>
+        <option>Gymnasieutbildning</option>
+        <option>Yrkesutbildning (vård/omsorg)</option>
+        <option>Högskoleutbildning</option>
+        <option>Annan utbildning</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Har du undersköterskeutbildning eller likvärdig?</label>
+      <div class="radio-group">
+        <label><input type="radio" name="underskoterska" value="ja" /> Ja</label>
+        <label><input type="radio" name="underskoterska" value="nej" /> Nej</label>
+      </div>
+    </div>
+
+    <!-- Praktiskt -->
+    <div class="section-title">Praktisk information</div>
+
+    <div class="field">
+      <label>Vilken sysselsättningsgrad söker du? <span class="required">*</span></label>
+      <select name="sysselsattning" required>
+        <option value="">Välj...</option>
+        <option>Heltid (100%)</option>
+        <option>Deltid (50–75%)</option>
+        <option>Timanställning / vid behov</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Vilka arbetstider kan du arbeta? <span class="required">*</span></label>
+      <div class="checkbox-group">
+        <label><input type="checkbox" name="arbetstider" value="dagtid" /> Dagtid (07–17)</label>
+        <label><input type="checkbox" name="arbetstider" value="kvall" /> Kväll (17–23)</label>
+        <label><input type="checkbox" name="arbetstider" value="natt" /> Natt</label>
+        <label><input type="checkbox" name="arbetstider" value="helg" /> Helger</label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Har du körkort?</label>
+      <div class="radio-group">
+        <label><input type="radio" name="korkort" value="ja" /> Ja</label>
+        <label><input type="radio" name="korkort" value="nej" /> Nej</label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Tillgänglig från och med <span class="required">*</span></label>
+      <input type="date" name="tillganglig_fran" required />
+    </div>
+
+    <!-- Personliga frågor -->
+    <div class="section-title">Personliga frågor</div>
+
+    <div class="field">
+      <label>Varför vill du arbeta som personlig assistent? <span class="required">*</span></label>
+      <textarea name="varfor_pa" required placeholder="Berätta med egna ord..."></textarea>
+    </div>
+
+    <div class="field">
+      <label>Vad är dina starkaste egenskaper i mötet med andra människor?</label>
+      <textarea name="egenskaper" placeholder="T.ex. tålmodighet, lyhördhet, humor..."></textarea>
+    </div>
+
+    <div class="field">
+      <label>Beskriv en situation där du visat ansvar och omdöme</label>
+      <textarea name="situation" placeholder="Berätta om ett konkret exempel..."></textarea>
+    </div>
+
+    <div class="field">
+      <label>Har du några frågor eller övrigt du vill tillägga?</label>
+      <textarea name="ovrigt" placeholder="Frivilligt..."></textarea>
+    </div>
+
+    <div class="submit-area">
+      <button type="submit">Skicka ansökan</button>
+      <p class="privacy">Dina uppgifter behandlas konfidentiellt och används enbart i rekryteringssyfte.</p>
+    </div>
+
+  </form>
+
+  <div id="confirmation">
+    <h2>Tack för din ansökan!</h2>
+    <p>Vi har tagit emot dina uppgifter och återkommer till dig så snart som möjligt.<br/>
+    Vid frågor, kontakta oss på <a href="mailto:nyttjobb@nobody.se">nyttjobb@nobody.se</a>.</p>
+  </div>
+
+</div>
+
+<script>
+  document.getElementById('ansokningsformular').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const required = this.querySelectorAll('[required]');
+    let valid = true;
+
+    required.forEach(field => {
+      if (field.type === 'radio') return;
+      field.style.borderColor = '';
+      if (!field.value.trim()) {
+        field.style.borderColor = '#e74c3c';
+        valid = false;
+      }
+    });
+
+    // Kolla radiogrupper
+    const radioGroups = {};
+    this.querySelectorAll('input[type="radio"][required]').forEach(r => {
+      radioGroups[r.name] = radioGroups[r.name] || false;
+      if (r.checked) radioGroups[r.name] = true;
+    });
+    Object.values(radioGroups).forEach(checked => {
+      if (!checked) valid = false;
+    });
+
+    if (!valid) {
+      alert('Vänligen fyll i alla obligatoriska fält (markerade med *).');
+      return;
+    }
+
+    // Samla data och skicka via mailto
+    const data = new FormData(this);
+    let body = '';
+    for (const [key, value] of data.entries()) {
+      body += key + ': ' + value + '\n';
+    }
+
+    window.location.href = 'mailto:nyttjobb@nobody.se'
+      + '?subject=' + encodeURIComponent('Ansökan – Personlig assistent')
+      + '&body=' + encodeURIComponent(body);
+
+    this.style.display = 'none';
+    document.getElementById('confirmation').style.display = 'block';
+  });
+</script>
+</body>
+</html>
